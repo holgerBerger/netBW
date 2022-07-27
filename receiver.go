@@ -33,7 +33,7 @@ func receiver() {
 
 	for i := 0; i < opts.Sockets; i++ {
 		go func(port int) {
-			server, err := net.Listen("tcp", hostname+":"+strconv.Itoa(port))
+			server, err := net.Listen("tcp" /* hostname+ */, ":"+strconv.Itoa(port))
 			if err != nil {
 				log.Println("Error listening:", err.Error())
 				os.Exit(1)
