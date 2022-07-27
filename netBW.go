@@ -160,7 +160,7 @@ func main() {
 
 		resultmatrix := make(map[string]map[string]int)
 		for _, sender := range opts.Source {
-			resultmatrix[sender] = make(map[string]int)
+			resultmatrix[strings.Split(sender, ".")[0]] = make(map[string]int)
 		}
 
 		var bytes int64
@@ -184,7 +184,7 @@ func main() {
 					log.Println(err, line)
 				}
 				bytes += int64(value)
-				resultmatrix[fields[0]][fields[1]] = value
+				resultmatrix[fields[0]][strings.Split(fields[1], ".")[0]] = value
 			}
 		}
 
@@ -205,7 +205,7 @@ func main() {
 		for _, sender := range opts.Source {
 			out = fmt.Sprintf("%15s", sender)
 			for _, dest := range opts.Destination {
-				out += fmt.Sprintf("%15f", (float64(resultmatrix[sender][dest]*8)/(1000*1000*1000))/float64(opts.Time))
+				out += fmt.Sprintf("%15f", (float64(resultmatrix[strings.Split(sender, ".")[0]][strings.Split(dest, ".")[0]]*8)/(1000*1000*1000))/float64(opts.Time))
 			}
 			log.Println(out)
 		}
